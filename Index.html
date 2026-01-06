@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fastboot Web Terminal</title>
+
+<style>
+  body {
+    font-family: monospace;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #111;
+    color: #0f0;
+  }
+
+  #toolbar {
+    padding: 8px;
+    border-bottom: 1px solid #333;
+    display: flex;
+    gap: 10px;
+  }
+
+  #output {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+  }
+
+  #input {
+    border-top: 1px solid #333;
+    padding: 10px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    background: #000;
+    color: #0f0;
+    border: none;
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  button {
+    background: #000;
+    color: #0f0;
+    border: 1px solid #333;
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #0f0;
+    color: #000;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="toolbar">
+  <button id="connectBtn">Connect</button>
+  <input type="file" id="fileInput" />
+  <input type="text" id="partition" placeholder="partition (boot, recovery, vendor_boot)" />
+  <button id="flashBtn">Flash</button>
+</div>
+
+<div id="output"></div>
+
+<div id="input">
+  <input id="cmd" placeholder="fastboot command (e.g. devices, reboot)" />
+</div>
+
+<script type="module">
+import * as fastboot from 'https://cdn.jsdelivr.net/gh/kdrag0n/fastboot.js@master/dist/fastboot.esm.js';
+
+const out = document.getElementById('output');
+const cmdInput = document.getElementById('cmd');
+const connectBtn = document.getElementById('connectBtn');
+const fileInput = document.getElementById('fileInput');
+const flashBtn = document.getElementById('flashBtn');
+const partitionInput = document.getElementById('partition');
+
+let device = null;
+
+function log(msg) {
+  out.textContent += msg + "\n";
+  out.scrollTop = out.scrollHeight;
+}
+
+async function connect() {
+  try {
+    log("[*] Requesting Fastboot device...");
+    device = await fastboot.connect({ filters: [] });
+    log("[✓] Connected");
+  } catch (e) {
+    log("[!] Connection failed: " + e);
+  }
+}
+
+async function runCommand(cmd) {
+  if (!device) {
+    log("[!] Not connected");
+    return;
+  }
+  try {
+    log("> " + cmd);
+    const res = await device.raw(cmd.split(" "));
+    log(new TextDecoder().decode(res));
+  } catch (e) {
+    log("[!] Error: " + e);
+  }
+}
+
+async function flashImage() {
+  if (!device) {
+    log("[!] Not connected");
+    return;
+  }
+
+  const file = fileInput.files[0];
+  const partition = partitionInput.value.trim();
+
+  if (!file || !partition) {
+    log("[!] Select a file and partition");
+    return;
+  }
+
+  log(`[*] Flashing ${file.name} → ${partition}`);
+
+  const buffer = await file.arrayBuffer();
+  const data = new Uint8Array(buffer);
+
+  try {
+    await device.flash(partition, data, progress => {
+      log(`[*] Progress: ${(progress * 100).toFixed(1)}%`);
+    });
+
+    log("[✓] Flash successful");
+  } catch (e) {
+    log("[!] Flash failed: " + e);
+  }
+}
+
+connectBtn.onclick = connect;
+flashBtn.onclick = flashImage;
+
+cmdInput.addEventListener("keydown", async e => {
+  if (e.key === "Enter") {
+    const cmd = cmdInput.value.trim();
+    cmdInput.value = "";
+    if (cmd) await runCommand(cmd);
+  }
+});
+
+log("[*] Fastboot Web Terminal Ready");
+log("[*] Click Connect or press Enter after typing a command");
+</script>
+
+</body>
+</html>
