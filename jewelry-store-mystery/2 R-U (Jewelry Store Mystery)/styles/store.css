@@ -1,0 +1,84 @@
+
+main{
+	background-image: url("../images/jewelry store.jpeg");
+}
+
+#doctor{
+	position: absolute;
+	bottom: 5%;
+	left: 5%;
+	width: 15%;
+	height: 55%;
+}
+
+#teacher{
+	position: absolute;
+	bottom: 5%;
+	right: 5%;
+	width: 15%;
+	height: 55%;
+}
+
+#firefighter{
+position: absolute;
+bottom: 5%;
+right: 12%;
+width: 12%;
+height: 50%;
+}
+
+#child{
+position: absolute;
+bottom: 5%;
+right: 23%;
+width: 7%;
+height: 37%;
+}
+
+a::before {
+content: '📃';
+}
+
+a::after {
+content: " " attr(href);
+}
+
+.scraps {
+	width: 150px;
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    border: 5px solid red;
+    padding: 1em;
+    background-color: rgba(100%, 100%, 100%, 75%);
+    border-radius: 1em;
+}
+
+.safe {
+	display: flex;
+	position: absolute;
+	flex-direction: column;
+	bottom: 37%;
+	left: 30%;
+	width: 40%;
+	height: 40%;
+	background-image: url("../images/open safe.png");
+	background-size: 100% 100%;
+	padding: 4% 14% 7vh 5%;
+	box-sizing: border-box;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.ransom{
+	position: relative;
+	top: 20%;
+	left: 20%;
+	width: 50%;
+	height: 100%;
+	border: 0;
+}
+
+.safe img {
+max-height: 100%;
+}

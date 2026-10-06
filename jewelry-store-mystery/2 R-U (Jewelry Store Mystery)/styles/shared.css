@@ -1,0 +1,72 @@
+body {
+margin: 0;
+height: 100vh;
+}
+
+.inventory
+{
+	background-color: floralwhite;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 6em;
+	height: 100%;
+	border: none;
+	border-right: 1px solid black;
+	box-sizing: border-box;
+	z-index: 1;
+}
+
+main{
+    background-size: 100% 100%;
+    /*min-height: 100vh;*/
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: calc(100% - 6em);
+overflow: hidden;
+}
+
+#glimmer {
+position: absolute;
+top: 5%;
+right: 5%;
+text-align: center;
+background-image: url(../images/glimmer.png);
+width: 8em;
+height: 8em;
+border-radius: 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: white;
+transform: rotate(10deg);
+}
+
+#glimmer:after {
+position: relative;
+top: 100%;
+content: 'Ms. Glimmer';
+background-color: rgba(100%, 100%, 100%, 85%);
+padding: 0.15em;
+border-radius: 0.15em;
+}
+
+main {
+    --wu: calc(2vh + min(0px, calc(1vw - 0.06em - 2vh))); /* width unit */
+    --hu: calc(0.5 * var(--wu)); /* height unit */
+	--vm: calc(50vh - var(--hu) * 50); /* vertical margin */
+	--hm: calc(50vw - 3em - var(--wu) * 50); /* horizontal margin */
+/* old:
+min(0px, calc(50vw - 3em - 100vh))
+calc(50vw - 3em - 100vh); */ 
+}
+
+@media (max-aspect-ratio: 2/1) {
+main {
+    --wu: calc(1vw - 0.06em);
+    --hu: 0.5vw;
+	--vm: calc(50vh - 25vw); /* vertical margin */
+	--hm: 0; /* horizontal margin */
+}
+}
