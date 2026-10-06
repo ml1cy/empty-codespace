@@ -1,0 +1,48 @@
+
+main {
+	background-image: url('../images/desktop.jpg');
+	background-size: cover;
+	background-position: center bottom;
+    background-attachment: fixed;
+display: flex;
+justify-content: space-evenly;
+width: calc(100% - 20vh - 2em);
+align-items: center;
+}
+
+.frame {
+	width: 66.17vh;
+	height: 85vh;
+	border: 1em solid brown;
+    background-color: rgba(100%, 100%, 100%, 75%);
+	position: relative;
+	flex-shrink: 0;
+}
+
+.frame > img[src="images/evidence-2.png"] {
+	width: 88.44%;
+}
+
+.frame > img[src="images/evidence-4.png"] {
+	width: 53.26%;
+}
+
+.frame > img[src="images/evidence-1.png"] {
+	width: 100%;
+}
+
+.frame img:hover {
+    filter: drop-shadow(0 0 5px white) drop-shadow(0 0 5px white) drop-shadow(0 0 5px white);
+z-index: 1;
+}
+
+.inventory
+{
+	background-color: floralwhite;
+	border: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: calc(20vh + 2em);
+	height: 100%;
+}

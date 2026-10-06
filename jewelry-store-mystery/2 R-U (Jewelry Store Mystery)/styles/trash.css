@@ -1,0 +1,18 @@
+
+#apple {
+position: absolute;
+bottom: calc(50vh - 10vw);
+left: 40%;
+width: 25%;
+height: 30vw;
+}
+
+
+main {
+background-image: url('../images/in-trash.png');
+background-size: cover;
+background-position: center;
+margin: 0;
+height: 100vh;
+overflow: hidden;
+}

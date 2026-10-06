@@ -1,0 +1,44 @@
+.suspect {
+transition: 1s all;
+transform-origin: bottom center;
+}
+
+.suspect:active {
+filter: hue-rotate(180deg);
+}
+
+#doctor{
+position: absolute;
+bottom: 5%;
+left: 5%;
+width: 15%;
+height: 55%;
+}
+
+#teacher{
+position: absolute;
+bottom: 5%;
+right: 5%;
+width: 15%;
+height: 55%;
+}
+
+#firefighter{
+position: absolute;
+bottom: 5%;
+left: 30%;
+width: 12%;
+height: 50%;
+}
+
+#child{
+position: absolute;
+bottom: 5%;
+right: 30%;
+width: 7%;
+height: 37%;
+}
+
+main{
+background-image:  url('../images/final-back.png'), url('../images/jewelry store.jpeg');
+}
